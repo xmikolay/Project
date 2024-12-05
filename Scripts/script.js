@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 
+const MAP_API = 'https://api.worldoftanks.eu/wot/encyclopedia/arenas/?application_id=ad0db27550136ff72d1b4d69ad6603ce';
+
 const app = document.getElementById('root');
 
 const logo = document.createElement('img');
@@ -21,7 +23,7 @@ app.appendChild(container);
 
 async function getMaps() {
     try{
-        const response = await fetch('https://api.worldoftanks.eu/wot/encyclopedia/arenas/?application_id=ad0db27550136ff72d1b4d69ad6603ce');
+        const response = await fetch(`${MAP_API}`);
         if (!response.ok) throw new error(`HTTP Error! Status: ${response.status}`);
         const data = await response.json();
 
