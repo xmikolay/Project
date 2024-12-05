@@ -66,3 +66,30 @@
       flex: 1 1 calc(33% - 2rem);
     }
   }
+
+.nav {
+    display: block;
+    background-color: #aeaeae;
+    overflow: hidden;
+    text-align: center; 
+    margin: 0 auto; 
+  }
+  
+  .nav a {
+    display: inline-block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .nav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .nav a.active {
+    background-color: #f99567;
+    color: white;
+  }

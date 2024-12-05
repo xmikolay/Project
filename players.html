@@ -3,12 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Of Tanks Stats</title>
+    <title>Players</title>
     <link rel="stylesheet" href="Styles/style.css">
+    <img src="logo.png" alt="wot logo">
 </head>
+<div class="nav">
+    <a href="index.html">Index</a>
+    <a href="maps.html">Maps</a>
+    <a class="active" href="players.html">Players</a>
+    <a href="tanks.html">Tanks</a>
+</div>
 <body>
     <div id="root">
     </div>
+    <h1>Search for a Player</h1>
+    
+    <div class="search-container">
+        <input type="text" id="playerName" placeholder="Enter Player Name" />
+        <button onclick="getPlayers()">Search</button>
+    </div>
+
+    <div id="results"></div>
     <script src="Scripts/script.js"></script>
 </body>
 </html>
