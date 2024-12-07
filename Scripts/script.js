@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (currentPage.includes('players'))
         {
             await getPlayers();
+            await getPlayerStats();
         }
         else if (currentPage.includes('maps'))
         {
@@ -39,7 +40,7 @@ async function getPlayers() {
     }
 
     const PLAYER_API = `https://api.worldoftanks.eu/wot/account/list/?application_id=ad0db27550136ff72d1b4d69ad6603ce&search=${playerName}`;
-    const container = document.getElementById('results');
+    const container = document.getElementById('resultsPlayer');
     container.innerHTML = ''; 
 
     try {
@@ -158,6 +159,49 @@ async function getMaps() {
         
     } catch (error){
         console.error('Fetch error', error);
+        container.textContent = `Error: ${error.message}`;
+    }
+}
+
+async function getPlayerStats() {
+    const playerID = document.getElementById('playerID').value.trim();
+
+    if (!playerID) {
+        alert('Please enter a player ID.');
+        return;
+    }
+
+    const PLAYERID_API = `https://api.worldoftanks.eu/wot/account/info/?application_id=ad0db27550136ff72d1b4d69ad6603ce&account_id=${playerID}`;
+    const container = document.getElementById('resultsID');
+    container.innerHTML = ''; 
+
+    try {
+        const response = await fetch(PLAYERID_API);
+        if (!response.ok) throw new Error(`HTTP getting Player Data: ${response.status}`);
+        const data = await response.json();
+
+        if (data.status == 'ok' && data.data.length > 0) {
+            data.data.forEach(player => {
+                const card = document.createElement('div');
+                card.setAttribute('class', 'card');
+
+                const playerName = document.createElement('h3');
+                playerName.textContent = `Player: ${player.nickname}`;
+
+                const playerAll = document.createElement('p');
+                playerAll.textContent = `Spotted: ${player.spotted}`;
+
+                card.appendChild(playerName);
+                card.appendChild(playerAll);
+
+                container.appendChild(card);
+                getPlayerStats();
+            });
+        } else {
+            container.textContent = 'No player stats found.';
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
         container.textContent = `Error: ${error.message}`;
     }
 }

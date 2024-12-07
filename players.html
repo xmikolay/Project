@@ -15,15 +15,25 @@
 </div>
 <body>
     <div id="root">
-    </div>
-    <h1>Search for a Player</h1>
+    
+    <h1>Search for a Player ID</h1>
     
     <div class="search-container">
         <input type="text" id="playerName" placeholder="Enter Player Name" />
         <button onclick="getPlayers()">Search</button>
     </div>
 
-    <div id="results"></div>
+    <div id="resultsPlayer"></div>
+
+    <h1>Search for Player Stats</h1>
+    
+    <div class="search-container">
+        <input type="text" id="playerID" placeholder="Enter Player ID" />
+        <button onclick="getPlayerStats()">Search</button>
+    </div>
+
+    <div id="resultsID"></div>
+    </div>
     <script src="Scripts/script.js"></script>
 </body>
 </html>
