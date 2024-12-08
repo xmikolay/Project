@@ -1,3 +1,5 @@
+// This event listener holds a bit of code which recognises if the current page you are accessing contains a keyword. 
+// With that keyword it loads only the specified function.
 document.addEventListener('DOMContentLoaded', async function () {
     try {   
         const currentPage = window.location.pathname;
@@ -15,10 +17,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         {
             await getTanks();
         }
-        
-        
+            
     } catch (error) {
-        console.error('An error occurred during initialization:', error);
+        console.error('An error occurred during initialization:', error); //Error pops up if website fails to load
     }
 });
 
@@ -27,29 +28,30 @@ const MAP_API = 'https://api.worldoftanks.eu/wot/encyclopedia/arenas/?applicatio
 const app = document.getElementById('root');
 
 const container = document.createElement('div');
-container.setAttribute('class', 'container');
+container.setAttribute('class', 'container');  //Creating a container which will hold all the data we want
 
 app.appendChild(container);
 
+//Function to get player stats
 async function getPlayers() {
-    const playerName = document.getElementById('playerName').value.trim();
+    const playerName = document.getElementById('playerName').value.trim(); //Getting player name as a variable to use for our API search. Using value.trim to cut out any white space entered by user
 
     if (!playerName) {
-        alert('Please enter a player name.');
+        alert('Please enter a player name.'); //Displays pop up alert anytime website loads up and if no player name is entered into search bar
         return;
     }
 
-    const PLAYER_API = `https://api.worldoftanks.eu/wot/account/list/?application_id=ad0db27550136ff72d1b4d69ad6603ce&search=${playerName}`;
+    const PLAYER_API = `https://api.worldoftanks.eu/wot/account/list/?application_id=ad0db27550136ff72d1b4d69ad6603ce&search=${playerName}`; //Here is our api and at the end is our previously declared variable
     const container = document.getElementById('resultsPlayer');
     container.innerHTML = ''; 
 
     try {
         const response = await fetch(PLAYER_API);
         if (!response.ok) throw new Error(`HTTP getting Player Data: ${response.status}`);
-        const data = await response.json();
+        const data = await response.json(); //Declaring "data" variable for our JSON response
 
-        if (data.status == 'ok' && data.data.length > 0) {
-            data.data.forEach(player => {
+        if (data.status == 'ok' && data.data.length > 0) { //Checking if data status is ok and if it isnt empty
+            data.data.forEach(player => { //Foreach loop to step through data
                 const card = document.createElement('div');
                 card.setAttribute('class', 'card');
 
@@ -59,39 +61,42 @@ async function getPlayers() {
                 const playerAccountId = document.createElement('p');
                 playerAccountId.textContent = `Account ID: ${player.account_id}`;
 
+                //Appending info to our card
                 card.appendChild(playerName);
                 card.appendChild(playerAccountId);
 
+                //Appending the card to container we made
                 container.appendChild(card);
             });
         } else {
-            container.textContent = 'No players found.';
+            container.textContent = 'No players found.'; //This error shows that there is no players found (JSON file is in incorrect format or empty)
         }
-    } catch (error) {
+    } catch (error) { //Catches any errors that show up with our function
         console.error('Fetch error:', error);
         container.textContent = `Error: ${error.message}`;
     }
 }
 
+//Function to get tank stats by nation
 async function getTanks() {
-    const nation = document.getElementById('nation').value.trim();
+    const nation = document.getElementById('nation').value.trim(); //Getting nation as a variable to use for our API search. Using value.trim to cut out any white space entered by user
 
     if (!nation) {
-        alert('Please enter Nation.');
+        alert('Please enter Nation.'); //Displays pop up alert anytime website loads up and if no nation is entered into search bar
         return;
     }
 
-    const TANK_API = `https://api.worldoftanks.eu/wot/encyclopedia/vehicles/?application_id=ad0db27550136ff72d1b4d69ad6603ce&nation=${nation}`;
+    const TANK_API = `https://api.worldoftanks.eu/wot/encyclopedia/vehicles/?application_id=ad0db27550136ff72d1b4d69ad6603ce&nation=${nation}`; //Here is our api and at the end is our previously declared variable
     const container = document.getElementById('results');
     container.innerHTML = ''; 
 
     try {
         const response = await fetch(TANK_API);
         if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
-        const data = await response.json();
+        const data = await response.json(); //Declaring "data" variable for our JSON response
 
-        if (data && data.data) {
-            Object.values(data.data).forEach(nation => {
+        if (data && data.data) { //Checks if the data object exists and if the data object has a property named data
+            Object.values(data.data).forEach(nation => { //Object.values will return an array of values from the data property
                 const card = document.createElement('div');
                 card.setAttribute('class', 'card');
 
@@ -109,32 +114,35 @@ async function getTanks() {
 
                 const tankDesc = document.createElement('p');
                 tankDesc.textContent = `${nation.description}`;
-
+                
+                //Appending info to our card
                 card.appendChild(tankImg);
                 card.appendChild(tankName);
                 card.appendChild(tankType);
                 card.appendChild(tankTier);
                 card.appendChild(tankDesc);
 
+                //Appending info to our container
                 container.appendChild(card);
             });
         } else {
-            container.textContent = 'No tanks found / Incorrect nation name.';
+            container.textContent = 'No tanks found / Incorrect nation name.'; //This error shows that there is no tanks or nation found (JSON file is in incorrect format or empty)
         }
-    } catch (error) {
+    } catch (error) { //Catches any errors that show up with our function
         console.error('Fetch error:', error);
         container.textContent = `Error: ${error.message}`;
     }
 }
 
+//Function to get all maps in the game
 async function getMaps() {
     try{
-        const response = await fetch(`${MAP_API}`);
+        const response = await fetch(`${MAP_API}`); //This time we dont embed the full api here since i declared it earlier. This is because theres no need for extra user input for our API search
         if (!response.ok) throw new error(`HTTP Error! Status: ${response.status}`);
-        const data = await response.json();
+        const data = await response.json(); //Declaring "data" variable for our JSON response
 
-        if (data && data.data) {
-            Object.values(data.data).forEach(element => {
+        if (data && data.data) { //Checks if the data object exists and if the data object has a property named data
+            Object.values(data.data).forEach(element => { //Object.values will return an array of values from the data property
                 const card = document.createElement('div');
                 card.setAttribute('class', 'card')
                 
@@ -147,17 +155,19 @@ async function getMaps() {
                 const camoType = document.createElement('p');
                 camoType.textContent = `Camouflage: ${element.camouflage_type}`;
 
+                //Appending info to our card
                 card.appendChild(mapName);
                 card.appendChild(mapDescription);
                 card.appendChild(camoType);
 
+                //Appending info to our container
                 container.appendChild(card);
             });
         } else {
-            container.textContent = 'No maps found.';
+            container.textContent = 'No maps found.'; //This error shows that there is no maps found (JSON file is in incorrect format or empty)
         }
         
-    } catch (error){
+    } catch (error){ //Catches any errors that show up with our function
         console.error('Fetch error', error);
         container.textContent = `Error: ${error.message}`;
     }
