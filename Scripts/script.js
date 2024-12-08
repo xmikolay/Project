@@ -163,7 +163,8 @@ async function getMaps() {
     }
 }
 
-async function getPlayerStats() {
+//THIS DOESNT WORK
+/*async function getPlayerStats() {
     const playerID = document.getElementById('playerID').value.trim();
 
     if (!playerID) {
@@ -180,22 +181,63 @@ async function getPlayerStats() {
         if (!response.ok) throw new Error(`HTTP getting Player Data: ${response.status}`);
         const data = await response.json();
 
-        if (data.status == 'ok' && data.data.length > 0) {
-            data.data.forEach(player => {
+        if (data && data.data) {
+            Object.values(data.data).forEach(player => {
+                const stats = player.stats.all
+
                 const card = document.createElement('div');
                 card.setAttribute('class', 'card');
 
-                const playerName = document.createElement('h3');
-                playerName.textContent = `Player: ${player.nickname}`;
+                const playerWins = document.createElement('p');
+                playerWins.textContent = `Wins: ${stats.wins}`;
 
-                const playerAll = document.createElement('p');
-                playerAll.textContent = `Spotted: ${player.spotted}`;
+                const playerLosses = document.createElement('p');
+                playerLosses.textContent = `Losses: ${stats.losses}`;
 
-                card.appendChild(playerName);
-                card.appendChild(playerAll);
+                const playerDraws = document.createElement('p');
+                playerDraws.textContent = `Draws: ${stats.draws}`;
 
+                const playerTotalFrags = document.createElement('p');
+                playerTotalFrags.textContent = `Total Frags: ${stats.wins}`;
+
+                const playerMaxFrags = document.createElement('p');
+                playerMaxFrags.textContent = `Max Frags: ${stats.max_frags}`;
+
+                const playerShotsTaken = document.createElement('p');
+                playerShotsTaken.textContent = `Shots Taken: ${stats.shots}`;
+
+                const playerDMG = document.createElement('p');
+                playerDMG.textContent = `Wins: ${stats.damage_dealt}`;
+
+                const playerBattles = document.createElement('p');
+                playerBattles.textContent = `Battles: ${stats.battles}`;
+
+                const playerBattlesSurvived = document.createElement('p');
+                playerBattlesSurvived.textContent = `Battles Survived: ${stats.survived_battles}`;
+
+                const playerXP = document.createElement('p');
+                playerXP.textContent = `Total XP: ${stats.xp}`;
+
+                const playerMaxXP = document.createElement('p');
+                playerMaxXP.textContent = `Max XP: ${stats.max_xp}`;
+
+                const playerHitPercentage = document.createElement('p');
+                playerHitPercentage.textContent = `Hit %: ${stats.hits_percents}`;
+
+                card.appendChild(playerWins);
+                card.appendChild(playerLosses);
+                card.appendChild(playerDraws);
+                card.appendChild(playerTotalFrags);
+                card.appendChild(playerMaxFrags);
+                card.appendChild(playerShotsTaken);
+                card.appendChild(playerDMG);
+                card.appendChild(playerBattles);
+                card.appendChild(playerBattlesSurvived);
+                card.appendChild(playerXP);
+                card.appendChild(playerMaxXP);
+                card.appendChild(playerHitPercentage);
+                
                 container.appendChild(card);
-                getPlayerStats();
             });
         } else {
             container.textContent = 'No player stats found.';
@@ -204,4 +246,4 @@ async function getPlayerStats() {
         console.error('Fetch error:', error);
         container.textContent = `Error: ${error.message}`;
     }
-}
+}*/

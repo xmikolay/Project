@@ -18,8 +18,8 @@
 
   img {
     display: block;
-    margin: 1rem auto;
-    max-width: 40%;
+    margin: 16px auto;
+    max-width: 20%;
   }
 
   .container {
@@ -28,8 +28,7 @@
   }
 
   .card {
-    margin: 1rem;
-    background: white;
+    margin: 16px;
     box-shadow: 2px 4px 25px rgba(0, 0, 0, .1);
     border-radius: 12px;
     overflow: hidden;
@@ -41,29 +40,35 @@
     transform: translate3D(0, -2px, 0);
   }
 
+  h1{
+    text-align: center;
+    padding: 24px 40px;
+    margin: 0 0 2rem 0;
+  }
   h3 {
     text-align: center;
-    padding: 1.5rem 2.5rem;
+    padding: 24px 40px;
     background-image: linear-gradient(120deg, #f99567 0%, #aca1a1 100%);
-    margin: 0 0 2rem 0;
+    margin: 0 0 32px 0;
     font-size: 1.5rem;
     color: white;
   }
 
   p {
-    padding: 0 2.5rem 2.5rem;
+    text-align: center;
+    padding: 0 40px 40px;
     margin: 0;
   }
 
   @media screen and (min-width: 600px) {
     .card {
-      flex: 1 1 calc(50% - 2rem);
+      flex: 1 1 calc(50% - 32px);
     }
   }
   
   @media screen and (min-width: 900px) {
     .card {
-      flex: 1 1 calc(33% - 2rem);
+      flex: 1 1 calc(33% - 32px);
     }
   }
 
@@ -92,4 +97,22 @@
   .nav a.active {
     background-color: #f99567;
     color: white;
+  }
+
+  .search-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px;
+    box-shadow: 2px 4px 25px rgba(0, 0, 0, .1);
+    overflow: hidden;
+    transition: all .2s linear;
+  }
+  
+  .input-box{
+    display: block;
+    margin: 10px;
+    box-shadow: 2px 4px 25px rgba(0, 0, 0, .1);
+    overflow: hidden;
+    padding: 10px;  
   }
